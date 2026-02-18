@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "skills": {
+    "java": {
+      "3-capas": {
+        "files": ["unittest.md"],
+        "description": "Java clásico (Controller, Services, Repositories, Entities, DTO) uso de SPs, JPA, Spring Boot, Maven"
+      },
+      "microservicios": {
+        "files": ["unittest.md"],
+        "description": "Microservicios Java con Spring Boot"
+      }
+    }
+  }
+}
