@@ -1,15 +1,22 @@
 #!/bin/bash
-# Uso: ./install.sh java 3-capas
+# Uso: ./install.sh [lenguaje] [arquitectura] [ruta-destino]
 
 LANGUAGE=$1
 ARCHITECTURE=$2
-SKILLS_REPO="https://github.com/tu-empresa/skills-hub"
-DEST="$HOME/.vscode/skills/$LANGUAGE/$ARCHITECTURE"
+DEST=$3
 
-mkdir -p $DEST
-git clone --depth=1 --filter=blob:none --sparse $SKILLS_REPO /tmp/skills-hub
-cd /tmp/skills-hub
-git sparse-checkout set skills/$LANGUAGE/$ARCHITECTURE
-cp -r skills/$LANGUAGE/$ARCHITECTURE/* $DEST
+SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &> /dev/null && pwd)
+SKILLS_SOURCE="$SCRIPT_DIR/skills/$LANGUAGE/$ARCHITECTURE"
+SKILLS_STANDARD="$SCRIPT_DIR/skills/$LANGUAGE/Estandares.md"
 
-echo "Skills instalados en $DEST"
+
+# Validar si el origen existe antes de copiar
+if [ -d "$SKILLS_SOURCE" ]; then
+    cp -r "$SKILLS_SOURCE" "$DEST/.skills"
+	cp -r "$SKILLS_STANDARD" "$DEST/.skills"
+
+    echo "✅ Skills copiados a $DEST/.skills"
+else
+    echo "❌ Error: No se encontró la ruta $SKILLS_SOURCE"
+    exit 1
+fi
